@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Pilotos - Rutas del Trifinio{% endblock %}
+
+{% block content %}
+<div class="page-header page-header-row">
+    <div>
+        <h2>Pilotos</h2>
+        <p>Conductores disponibles para asignacion de viajes</p>
+    </div>
+    <a href="{% url 'pilotos_crear' %}" class="btn btn-primary">Nuevo piloto</a>
+</div>
+
+<section class="content-panel">
+    <div class="table-responsive">
+        <table class="table align-middle table-hover mb-0">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>DPI</th>
+                    <th>Telefono</th>
+                    <th>Licencia</th>
+                    <th>Estado</th>
+                    <th class="text-end">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for piloto in pilotos %}
+                <tr>
+                    <td>{{ piloto.id_piloto }}</td>
+                    <td><strong>{{ piloto.nombre }}</strong></td>
+                    <td>{{ piloto.dpi|default:"-" }}</td>
+                    <td>{{ piloto.telefono|default:"-" }}</td>
+                    <td>{{ piloto.licencia|default:"-" }}</td>
+                    <td><span class="status-pill">{{ piloto.estado|default:"-" }}</span></td>
+                    <td class="text-end">
+                        <a href="{% url 'pilotos_editar' piloto.id_piloto %}" class="btn btn-sm btn-outline-primary">Editar</a>
+                        <a href="{% url 'pilotos_eliminar' piloto.id_piloto %}" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center text-muted py-4">No hay pilotos registrados.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

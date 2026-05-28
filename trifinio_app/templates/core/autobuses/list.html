@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Autobuses - Rutas del Trifinio{% endblock %}
+
+{% block content %}
+<div class="page-header page-header-row">
+    <div>
+        <h2>Autobuses</h2>
+        <p>Gestion de flota registrada en Oracle</p>
+    </div>
+    <a href="{% url 'autobuses_crear' %}" class="btn btn-primary">Nuevo autobus</a>
+</div>
+
+<section class="content-panel">
+    <div class="table-responsive">
+        <table class="table align-middle table-hover mb-0">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Placa</th>
+                    <th>Modelo</th>
+                    <th>Capacidad</th>
+                    <th>Estado</th>
+                    <th class="text-end">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for bus in buses %}
+                <tr>
+                    <td>{{ bus.id_autobus }}</td>
+                    <td><strong>{{ bus.placa }}</strong></td>
+                    <td>{{ bus.modelo|default:"-" }}</td>
+                    <td>{{ bus.capacidad }}</td>
+                    <td><span class="status-pill">{{ bus.estado|default:"-" }}</span></td>
+                    <td class="text-end">
+                        <a href="{% url 'autobuses_editar' bus.id_autobus %}" class="btn btn-sm btn-outline-primary">Editar</a>
+                        <a href="{% url 'autobuses_eliminar' bus.id_autobus %}" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center text-muted py-4">No hay autobuses registrados.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

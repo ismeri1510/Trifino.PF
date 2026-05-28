@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Rutas - Rutas del Trifinio{% endblock %}
+
+{% block content %}
+<div class="page-header page-header-row">
+    <div>
+        <h2>Rutas</h2>
+        <p>Catalogo de origen, destino y precio base</p>
+    </div>
+    <a href="{% url 'rutas_crear' %}" class="btn btn-primary">Nueva ruta</a>
+</div>
+
+<section class="content-panel">
+    <div class="table-responsive">
+        <table class="table align-middle table-hover mb-0">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Origen</th>
+                    <th>Destino</th>
+                    <th>Distancia</th>
+                    <th>Precio</th>
+                    <th>Duracion</th>
+                    <th class="text-end">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ruta in rutas %}
+                <tr>
+                    <td>{{ ruta.id_ruta }}</td>
+                    <td><strong>{{ ruta.origen|default:"-" }}</strong></td>
+                    <td>{{ ruta.destino|default:"-" }}</td>
+                    <td>{{ ruta.distancia_km|default:"-" }} km</td>
+                    <td>Q {{ ruta.precio_base|default:"0.00" }}</td>
+                    <td>{{ ruta.duracion|default:"-" }}</td>
+                    <td class="text-end">
+                        <a href="{% url 'rutas_editar' ruta.id_ruta %}" class="btn btn-sm btn-outline-primary">Editar</a>
+                        <a href="{% url 'rutas_eliminar' ruta.id_ruta %}" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center text-muted py-4">No hay rutas registradas.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

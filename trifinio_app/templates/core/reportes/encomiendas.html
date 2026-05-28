@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Reporte de encomiendas - Rutas del Trifinio{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Logistica de encomiendas</h2>
+    <p>Datos consumidos desde vw_logistica_encomiendas</p>
+</div>
+
+{% include "core/reportes/_tabs.html" %}
+
+<section class="content-panel">
+    <div class="table-responsive">
+        <table class="table align-middle table-hover mb-0">
+            <thead>
+                <tr>
+                    <th>Codigo</th>
+                    <th>Remitente</th>
+                    <th>Destinatario</th>
+                    <th>Ruta</th>
+                    <th>Salida</th>
+                    <th>Peso</th>
+                    <th>Costo</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for encomienda in encomiendas %}
+                <tr>
+                    <td><strong>{{ encomienda.codigo_rastreo }}</strong></td>
+                    <td>{{ encomienda.remitente }}</td>
+                    <td>{{ encomienda.destinatario }}</td>
+                    <td>{{ encomienda.origen }} - {{ encomienda.destino }}</td>
+                    <td>{{ encomienda.fecha_salida|date:"Y-m-d" }} {{ encomienda.hora_salida }}</td>
+                    <td>{{ encomienda.peso }} lb</td>
+                    <td>Q {{ encomienda.costo }}</td>
+                    <td><span class="status-pill">{{ encomienda.estado }}</span></td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="8" class="text-center text-muted py-4">No hay datos.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

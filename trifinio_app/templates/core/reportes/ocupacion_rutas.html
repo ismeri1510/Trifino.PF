@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Ocupacion de rutas - Rutas del Trifinio{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Ocupacion de rutas</h2>
+    <p>Datos consumidos desde vw_ocupacion_rutas</p>
+</div>
+
+{% include "core/reportes/_tabs.html" %}
+
+<section class="content-panel">
+    <div class="table-responsive">
+        <table class="table align-middle table-hover mb-0">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Ruta</th>
+                    <th>Viajes</th>
+                    <th>Capacidad total</th>
+                    <th>Boletos vendidos</th>
+                    <th>Ocupacion</th>
+                    <th>Ingresos boletos</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ruta in rutas %}
+                <tr>
+                    <td>{{ ruta.id_ruta }}</td>
+                    <td><strong>{{ ruta.origen }} - {{ ruta.destino }}</strong></td>
+                    <td>{{ ruta.total_viajes }}</td>
+                    <td>{{ ruta.capacidad_total|default:"0" }}</td>
+                    <td>{{ ruta.boletos_vendidos }}</td>
+                    <td>{{ ruta.porcentaje_ocupacion }}%</td>
+                    <td>Q {{ ruta.ingresos_boletos }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="7" class="text-center text-muted py-4">No hay datos.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

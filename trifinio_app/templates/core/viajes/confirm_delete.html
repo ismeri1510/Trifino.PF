@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Eliminar viaje - Rutas del Trifinio{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Eliminar viaje</h2>
+    <p>Confirma la accion antes de continuar</p>
+</div>
+
+<section class="content-panel form-panel">
+    <p class="mb-4">Deseas eliminar el viaje <strong>{{ viaje.id_viaje }}</strong>?</p>
+    <form method="post">
+        {% csrf_token %}
+        <div class="d-flex gap-2 justify-content-end">
+            <a href="{% url 'viajes_list' %}" class="btn btn-outline-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-danger">Eliminar</button>
+        </div>
+    </form>
+</section>
+{% endblock %}

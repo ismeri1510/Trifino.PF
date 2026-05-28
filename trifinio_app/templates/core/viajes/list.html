@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Viajes - Rutas del Trifinio{% endblock %}
+
+{% block content %}
+<div class="page-header page-header-row">
+    <div>
+        <h2>Viajes</h2>
+        <p>Programacion de rutas, buses y pilotos</p>
+    </div>
+    <a href="{% url 'viajes_crear' %}" class="btn btn-primary">Nuevo viaje</a>
+</div>
+
+<section class="content-panel">
+    <div class="table-responsive">
+        <table class="table align-middle table-hover mb-0">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Ruta</th>
+                    <th>Bus</th>
+                    <th>Piloto</th>
+                    <th>Salida</th>
+                    <th>Estado</th>
+                    <th class="text-end">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for viaje in viajes %}
+                <tr>
+                    <td>{{ viaje.id_viaje }}</td>
+                    <td><strong>{{ viaje.ruta.origen }} - {{ viaje.ruta.destino }}</strong></td>
+                    <td>{{ viaje.autobus.placa }}</td>
+                    <td>{{ viaje.piloto.nombre }}</td>
+                    <td>{{ viaje.fecha_salida|date:"Y-m-d"|default:"-" }} {{ viaje.hora_salida|default:"" }}</td>
+                    <td><span class="status-pill">{{ viaje.estado|default:"-" }}</span></td>
+                    <td class="text-end">
+                        <a href="{% url 'viajes_finalizar' viaje.id_viaje %}" class="btn btn-sm btn-outline-success">Finalizar</a>
+                        <a href="{% url 'viajes_editar' viaje.id_viaje %}" class="btn btn-sm btn-outline-primary">Editar</a>
+                        <a href="{% url 'viajes_eliminar' viaje.id_viaje %}" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center text-muted py-4">No hay viajes registrados.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

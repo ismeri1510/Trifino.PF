@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Finalizar viaje - Rutas del Trifinio{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Finalizar viaje</h2>
+    <p>Modulo transaccional conectado al procedure sp_finalizar_viaje</p>
+</div>
+
+<section class="content-panel form-panel">
+    <div class="mb-4">
+        <p class="mb-1"><strong>Viaje:</strong> {{ viaje.id_viaje }}</p>
+        <p class="mb-1"><strong>Ruta:</strong> {{ viaje.ruta.origen }} - {{ viaje.ruta.destino }}</p>
+        <p class="mb-1"><strong>Bus:</strong> {{ viaje.autobus.placa }}</p>
+        <p class="mb-1"><strong>Piloto:</strong> {{ viaje.piloto.nombre }}</p>
+        <p class="mb-1"><strong>Salida:</strong> {{ viaje.fecha_salida|date:"Y-m-d" }} {{ viaje.hora_salida }}</p>
+        <p class="mb-0"><strong>Estado actual:</strong> {{ viaje.estado }}</p>
+    </div>
+
+    <form method="post" novalidate>
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="mb-3">
+                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}<div class="form-error">{{ field.errors|striptags }}</div>{% endif %}
+            </div>
+        {% endfor %}
+
+        <div class="alert alert-info">
+            Oracle cambiara el viaje a FINALIZADO, liberara el bus y actualizara encomiendas relacionadas.
+        </div>
+
+        <div class="d-flex gap-2 justify-content-end">
+            <a href="{% url 'viajes_list' %}" class="btn btn-outline-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-success">Finalizar viaje</button>
+        </div>
+    </form>
+</section>
+{% endblock %}

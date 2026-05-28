@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Reporte de viajes - Rutas del Trifinio{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Reporte de viajes</h2>
+    <p>Datos consumidos desde vw_reporte_viajes</p>
+</div>
+
+{% include "core/reportes/_tabs.html" %}
+
+<section class="content-panel">
+    <div class="table-responsive">
+        <table class="table align-middle table-hover mb-0">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Ruta</th>
+                    <th>Salida</th>
+                    <th>Bus</th>
+                    <th>Piloto</th>
+                    <th>Boletos</th>
+                    <th>Asientos libres</th>
+                    <th>Encomiendas</th>
+                    <th>Ingresos</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for viaje in viajes %}
+                <tr>
+                    <td>{{ viaje.id_viaje }}</td>
+                    <td><strong>{{ viaje.origen }} - {{ viaje.destino }}</strong></td>
+                    <td>{{ viaje.fecha_salida|date:"Y-m-d" }} {{ viaje.hora_salida }}</td>
+                    <td>{{ viaje.placa }}</td>
+                    <td>{{ viaje.piloto }}</td>
+                    <td>{{ viaje.boletos_vendidos }}</td>
+                    <td>{{ viaje.asientos_disponibles }}</td>
+                    <td>{{ viaje.encomiendas_registradas }}</td>
+                    <td>Q {{ viaje.ingresos_totales }}</td>
+                    <td><span class="status-pill">{{ viaje.estado }}</span></td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="10" class="text-center text-muted py-4">No hay datos.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

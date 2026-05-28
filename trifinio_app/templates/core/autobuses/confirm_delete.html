@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Eliminar autobus - Rutas del Trifinio{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Eliminar autobus</h2>
+    <p>Confirma la accion antes de continuar</p>
+</div>
+
+<section class="content-panel form-panel">
+    <p class="mb-4">
+        Deseas eliminar el autobus <strong>{{ autobus.placa }}</strong>
+        {% if autobus.modelo %}({{ autobus.modelo }}){% endif %}?
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="d-flex gap-2 justify-content-end">
+            <a href="{% url 'autobuses_list' %}" class="btn btn-outline-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-danger">Eliminar</button>
+        </div>
+    </form>
+</section>
+{% endblock %}

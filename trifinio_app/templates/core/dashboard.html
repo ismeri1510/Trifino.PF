@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Rutas del Trifinio{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Dashboard</h2>
+    <p>Resumen general del sistema de transporte</p>
+</div>
+
+<section class="dashboard-grid">
+    <article class="metric-card">
+        <div class="metric-icon bg-primary">B</div>
+        <span>Total Buses</span>
+        <strong>{{ total_buses }}</strong>
+        <small>Registrados en flota</small>
+    </article>
+
+    <article class="metric-card">
+        <div class="metric-icon bg-success">V</div>
+        <span>Viajes Activos</span>
+        <strong>{{ viajes_activos }}</strong>
+        <small>Estado programado</small>
+    </article>
+
+    <article class="metric-card">
+        <div class="metric-icon bg-purple">T</div>
+        <span>Boletos Vendidos</span>
+        <strong>{{ boletos_vendidos }}</strong>
+        <small>Sin anulados</small>
+    </article>
+
+    <article class="metric-card">
+        <div class="metric-icon bg-orange">E</div>
+        <span>Encomiendas Pendientes</span>
+        <strong>{{ encomiendas_pendientes }}</strong>
+        <small>Pendientes o en transito</small>
+    </article>
+</section>
+
+<section class="dashboard-extra">
+    <article class="content-panel">
+        <div class="section-heading">
+            <h3>Resumen gerencial</h3>
+            <a href="{% url 'reporte_viajes' %}" class="btn btn-sm btn-outline-primary">Ver reportes</a>
+        </div>
+        <div class="summary-grid">
+            <div>
+                <span>Ingresos totales</span>
+                <strong>Q {{ ingresos_totales }}</strong>
+            </div>
+            <div>
+                <span>Ruta con mayor ocupacion</span>
+                {% if ruta_mayor_ocupacion %}
+                    <strong>{{ ruta_mayor_ocupacion.origen }} - {{ ruta_mayor_ocupacion.destino }}</strong>
+                    <small>{{ ruta_mayor_ocupacion.porcentaje_ocupacion }}%</small>
+                {% else %}
+                    <strong>-</strong>
+                {% endif %}
+            </div>
+        </div>
+    </article>
+
+    <article class="content-panel">
+        <div class="section-heading">
+            <h3>Ultimos viajes</h3>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-sm align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>Ruta</th>
+                        <th>Estado</th>
+                        <th>Ingresos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for viaje in ultimos_viajes %}
+                    <tr>
+                        <td>{{ viaje.origen }} - {{ viaje.destino }}</td>
+                        <td><span class="status-pill">{{ viaje.estado }}</span></td>
+                        <td>Q {{ viaje.ingresos_totales }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="3" class="text-muted">No hay datos.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </article>
+
+    <article class="content-panel">
+        <div class="section-heading">
+            <h3>Ultimas encomiendas</h3>
+            <a href="{% url 'reporte_encomiendas' %}" class="btn btn-sm btn-outline-primary">Ver detalle</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-sm align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>Codigo</th>
+                        <th>Destino</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for encomienda in ultimas_encomiendas %}
+                    <tr>
+                        <td>{{ encomienda.codigo_rastreo }}</td>
+                        <td>{{ encomienda.destino }}</td>
+                        <td><span class="status-pill">{{ encomienda.estado }}</span></td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="3" class="text-muted">No hay datos.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </article>
+</section>
+{% endblock %}

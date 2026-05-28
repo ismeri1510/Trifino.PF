@@ -1,0 +1,5 @@
+<div class="report-tabs">
+    <a href="{% url 'reporte_viajes' %}" class="btn btn-sm {% if request.resolver_match.url_name == 'reporte_viajes' %}btn-primary{% else %}btn-outline-primary{% endif %}">Viajes</a>
+    <a href="{% url 'reporte_ocupacion_rutas' %}" class="btn btn-sm {% if request.resolver_match.url_name == 'reporte_ocupacion_rutas' %}btn-primary{% else %}btn-outline-primary{% endif %}">Ocupacion rutas</a>
+    <a href="{% url 'reporte_encomiendas' %}" class="btn btn-sm {% if request.resolver_match.url_name == 'reporte_encomiendas' %}btn-primary{% else %}btn-outline-primary{% endif %}">Encomiendas</a>
+</div>
